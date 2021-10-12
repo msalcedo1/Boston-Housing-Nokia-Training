@@ -1,0 +1,112 @@
+<!--
+author: anantSinghCross (Anant Singh)
+-->
+
+<html>
+  <head>
+    <style>
+      body{
+        background-color: #404040;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      }
+      div.form{
+        box-shadow: 2px 2px 30px #1a1a1a;
+        width: 45vw;
+        background-color: #bfbfbf;
+        text-align: center;
+        border-left-color: #a6a6a6;
+      }
+      table{
+        font-size: 10px;
+        box-shadow: 2px 2px 30px #1a1a1a;
+        padding: 15px;
+        background-color: #bfbfbf;
+        width: 420px;
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        border-top-style: solid;
+        border-bottom-style: solid;
+        border-color: #ffff00;
+        border-top-width: 5px;
+        border-bottom-width: 5px;
+      }
+      form{
+        border-left-style: solid;
+        border-color: #ffff00;
+        border-left-width: 5px;
+        padding: 15px;
+      }
+      h1{
+        color: #f2f2f2;
+        text-align: center;
+      }
+      input[type=text]{
+        text-align: center;
+        width: 200px;
+        height: 30px;
+        border: 0px;
+      }
+      input[type=submit]{
+        background-color: #ffff00;
+        width: 90px;
+        height: 30px;
+        border: 0px;
+      }
+      input[type=submit]:hover{
+        box-shadow: 2px 4px 20px #666666;
+      }
+      span{
+        color: #ffffff;
+      }
+      td{
+        color: #595959;
+      }
+      td.heading{
+        width: 50px;
+      }
+    </style>
+    <title>Ames Housing Project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1>Ames Housing Predictor</h1>
+    <center>
+    <div class="form">
+    <form action="/predict" method="post">
+      Enter values to predict value of owner occupied homes<br><br>
+      <input type="text" name="GarageCars" placeholder="GarageCars" autofocus required><br><br>
+      <input type="text" name="OverallQual" placeholder="OverallQual" required><br><br>
+      <input type="text" name="FullBath" placeholder="FullBath" required><br><br>
+      <input type="text" name="ExterQual" placeholder="ExterQual" required><br><br>
+      <input type="text" name="GrLivArea" placeholder="GrLivArea" required><br><br>
+      <input type="text" name="BsmtQual" placeholder="BsmtQual" required><br><br>
+      <input type="text" name="KitchenQual" placeholder="KitchenQual" required><br><br>
+      <input type="text" name="TotRmsAbvGrd" placeholder="TotRmsAbvGrd" required><br><br>
+      <input type="text" name="TotalBsmtSF" placeholder="TotalBsmtSF" required><br><br>
+      <input type="text" name="CentralAir" placeholder="CentralAir" required><br><br>
+      <input type="text" name="KitchenAbvGr" placeholder="KitchenAbvGr" required><br><br>
+      <input type="submit" value="Predict">
+    </form>
+  </div>
+</center>
+<br>
+<br>
+<div class = "legend">
+  <table>
+<tr><td class = "heading">GarageCars :</td><td>Garage space</td></tr><br>
+<tr><td class = "heading">OverallQual :</td><td>Overall property quality</td></tr><br>
+<tr><td class = "heading">FullBath :</td><td>Number of full Baths</td></tr><br>
+<tr><td class = "heading">ExterQual :</td><td>External quality</td></tr><br>
+<tr><td class = "heading">GrLivArea :</td><td>ground living area</td></tr><br>
+<tr><td class = "heading">BsmtQual :</td><td>Height of basement</td></tr><br>
+<tr><td class = "heading">KitchenQual :</td><td>Kitchen Qual</td></tr><br>
+<tr><td class = "heading">TotRmsAbvGrd :</td><td>Total Rooms Abv Grd</td></tr><br>
+<tr><td class = "heading">TotalBsmtSF :</td><td>total area of the basement</td></tr><br>
+<tr><td class = "heading">CentralAir :</td><td>Central Air</td></tr><br>
+<tr><td class = "heading">KitchenAbvGr :</td><td>Kitchen Abv Gr</td></tr><br>
+</table>
+</div>
+</body>
+</html>

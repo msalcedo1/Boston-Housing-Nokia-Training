@@ -1,0 +1,266 @@
+root@aiml-training-msalcedo:~/AmesHousing# ls
+Dockerfile  README.txt  _config.yml  api.py  api_2.py  model.dat  requirements.txt  templates  trainer.py
+root@aiml-training-msalcedo:~/AmesHousing# cd ..
+root@aiml-training-msalcedo:~# ls
+AmesHousing  docker_flask  snap
+root@aiml-training-msalcedo:~# rm -rf AmesHousing
+root@aiml-training-msalcedo:~# ls
+docker_flask  snap
+root@aiml-training-msalcedo:~# mkdir ames-housing
+root@aiml-training-msalcedo:~# ls
+ames-housing  docker_flask  snap
+root@aiml-training-msalcedo:~# mkdir templates
+root@aiml-training-msalcedo:~# rm templates
+rm: cannot remove 'templates': Is a directory
+root@aiml-training-msalcedo:~# rm -rf templates
+root@aiml-training-msalcedo:~# cd ames-housing
+root@aiml-training-msalcedo:~/ames-housing# mkdir templates
+root@aiml-training-msalcedo:~/ames-housing# ls
+Dockerfile  README.txt  _config.yml  api.ipynb  api.py  api_2.py  model.dat  requirements.txt  templates  trainer.py
+root@aiml-training-msalcedo:~/ames-housing# docker build -t ames-housing:1.0 .
+Sending build context to Docker daemon  188.9kB
+Step 1/6 : FROM python:3.8.3
+ ---> 7f5b6ccd03e9
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 91991f66b71d
+Step 3/6 : COPY . /app
+ ---> ce8f1a5446cf
+Step 4/6 : RUN pip3 install --no-cache-dir -r requirements.txt
+ ---> Running in 5c2168c2b448
+Collecting cloudpickle==1.6.0
+  Downloading cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting numpy==1.18.2
+  Downloading numpy-1.18.2-cp38-cp38-manylinux1_x86_64.whl (20.6 MB)
+Collecting pandas==1.1.4
+  Downloading pandas-1.1.4-cp38-cp38-manylinux1_x86_64.whl (9.3 MB)
+Collecting xgboost==1.2.1
+  Downloading xgboost-1.2.1-py3-none-manylinux2010_x86_64.whl (148.9 MB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting pytz>=2017.2
+  Downloading pytz-2020.4-py2.py3-none-any.whl (509 kB)
+Collecting python-dateutil>=2.7.3
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting scipy
+  Downloading scipy-1.5.4-cp38-cp38-manylinux1_x86_64.whl (25.8 MB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl (32 kB)
+Collecting six>=1.5
+  Downloading six-1.15.0-py2.py3-none-any.whl (10 kB)
+Installing collected packages: cloudpickle, click, MarkupSafe, Jinja2, Werkzeug, itsdangerous, Flask, numpy, pytz, six, python-dateutil, pandas, scipy, xgboost
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 cloudpickle-1.6.0 itsdangerous-1.1.0 numpy-1.18.2 pandas-1.1.4 python-dateutil-2.8.1 pytz-2020.4 scipy-1.5.4 six-1.15.0 xgboost-1.2.1
+WARNING: You are using pip version 20.1.1; however, version 20.2.4 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+Removing intermediate container 5c2168c2b448
+ ---> 114cfdcb42fb
+Step 5/6 : EXPOSE 8001
+ ---> Running in 221b437f0bd5
+Removing intermediate container 221b437f0bd5
+ ---> a3a3ef295677
+Step 6/6 : CMD ["python3", "api.py"]
+ ---> Running in fe19370bed68
+Removing intermediate container fe19370bed68
+ ---> 47d6648de1de
+Successfully built 47d6648de1de
+Successfully tagged ames-housing:1.0
+root@aiml-training-msalcedo:~/ames-housing# docker run -p 8080:8001 ames-housing:1.0
+ * Serving Flask app "api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+^C * Serving Flask app "api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8001/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 151-442-666
+10.139.43.240 - - [29/Nov/2020 21:38:54] "GET / HTTP/1.1" 200 -
+10.139.43.240 - - [29/Nov/2020 21:39:11] "POST /predict HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/app/api.py", line 33, in make_predictions
+    pred = loaded_model.predict(X)
+NameError: name 'loaded_model' is not defined
+10.139.43.240 - - [29/Nov/2020 21:39:12] "GET /predict?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+10.139.43.240 - - [29/Nov/2020 21:39:12] "GET /predict?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+10.139.43.240 - - [29/Nov/2020 21:39:12] "GET /predict?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+10.139.43.240 - - [29/Nov/2020 21:39:13] "GET /predict?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+10.139.43.240 - - [29/Nov/2020 21:39:13] "GET /predict?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+^Croot@aiml-training-msalcedo:~/ames-housing# ls
+Dockerfile  README.txt  _config.yml  api.ipynb  api.py  api_2.py  model.dat  requirements.txt  templates  trainer.py
+root@aiml-training-msalcedo:~/ames-housing# rm api.py
+root@aiml-training-msalcedo:~/ames-housing# rm api_2.py
+root@aiml-training-msalcedo:~/ames-housing# rm api.ipynb
+root@aiml-training-msalcedo:~/ames-housing# ls
+Dockerfile  README.txt  _config.yml  model.dat  requirements.txt  templates  trainer.py
+root@aiml-training-msalcedo:~/ames-housing# docker build -t ames-housing:1.0 .
+Sending build context to Docker daemon  178.7kB
+Step 1/6 : FROM python:3.8.3
+ ---> 7f5b6ccd03e9
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 91991f66b71d
+Step 3/6 : COPY . /app
+ ---> 90f2a72a920e
+Step 4/6 : RUN pip3 install --no-cache-dir -r requirements.txt
+ ---> Running in 638b9f8c6041
+Collecting cloudpickle==1.6.0
+  Downloading cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting numpy==1.18.2
+  Downloading numpy-1.18.2-cp38-cp38-manylinux1_x86_64.whl (20.6 MB)
+Collecting pandas==1.1.4
+  Downloading pandas-1.1.4-cp38-cp38-manylinux1_x86_64.whl (9.3 MB)
+Collecting xgboost==1.2.1
+  Downloading xgboost-1.2.1-py3-none-manylinux2010_x86_64.whl (148.9 MB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting python-dateutil>=2.7.3
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting pytz>=2017.2
+  Downloading pytz-2020.4-py2.py3-none-any.whl (509 kB)
+Collecting scipy
+  Downloading scipy-1.5.4-cp38-cp38-manylinux1_x86_64.whl (25.8 MB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl (32 kB)
+Collecting six>=1.5
+  Downloading six-1.15.0-py2.py3-none-any.whl (10 kB)
+Installing collected packages: cloudpickle, click, MarkupSafe, Jinja2, itsdangerous, Werkzeug, Flask, numpy, six, python-dateutil, pytz, pandas, scipy, xgboost
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 cloudpickle-1.6.0 itsdangerous-1.1.0 numpy-1.18.2 pandas-1.1.4 python-dateutil-2.8.1 pytz-2020.4 scipy-1.5.4 six-1.15.0 xgboost-1.2.1
+WARNING: You are using pip version 20.1.1; however, version 20.2.4 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+Removing intermediate container 638b9f8c6041
+ ---> 5c079af5ef7f
+Step 5/6 : EXPOSE 8001
+ ---> Running in 1426719bf51e
+Removing intermediate container 1426719bf51e
+ ---> 2daa29a9c750
+Step 6/6 : CMD ["python3", "api.py"]
+ ---> Running in 07b8feacfce2
+Removing intermediate container 07b8feacfce2
+ ---> c8647a3278df
+Successfully built c8647a3278df
+Successfully tagged ames-housing:1.0
+root@aiml-training-msalcedo:~/ames-housing# docker run -p 8080:8001 ames-housing:1.0
+ * Serving Flask app "api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+^Croot@aiml-training-msalcedo:~/ames-housing# rm api.py
+root@aiml-training-msalcedo:~/ames-housing# ls
+Dockerfile  README.txt  _config.yml  model.dat  requirements.txt  templates  trainer.py
+root@aiml-training-msalcedo:~/ames-housing# docker build -t ames-housing:1.0 .
+Sending build context to Docker daemon  178.7kB
+Step 1/6 : FROM python:3.8.3
+ ---> 7f5b6ccd03e9
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 91991f66b71d
+Step 3/6 : COPY . /app
+ ---> 8e9390a22921
+Step 4/6 : RUN pip3 install --no-cache-dir -r requirements.txt
+ ---> Running in d2af3bceb357
+Collecting cloudpickle==1.6.0
+  Downloading cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting numpy==1.18.2
+  Downloading numpy-1.18.2-cp38-cp38-manylinux1_x86_64.whl (20.6 MB)
+Collecting pandas==1.1.4
+  Downloading pandas-1.1.4-cp38-cp38-manylinux1_x86_64.whl (9.3 MB)
+Collecting xgboost==1.2.1
+  Downloading xgboost-1.2.1-py3-none-manylinux2010_x86_64.whl (148.9 MB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting python-dateutil>=2.7.3
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting pytz>=2017.2
+  Downloading pytz-2020.4-py2.py3-none-any.whl (509 kB)
+Collecting scipy
+  Downloading scipy-1.5.4-cp38-cp38-manylinux1_x86_64.whl (25.8 MB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl (32 kB)
+Collecting six>=1.5
+  Downloading six-1.15.0-py2.py3-none-any.whl (10 kB)
+Installing collected packages: cloudpickle, click, itsdangerous, MarkupSafe, Jinja2, Werkzeug, Flask, numpy, six, python-dateutil, pytz, pandas, scipy, xgboost
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 cloudpickle-1.6.0 itsdangerous-1.1.0 numpy-1.18.2 pandas-1.1.4 python-dateutil-2.8.1 pytz-2020.4 scipy-1.5.4 six-1.15.0 xgboost-1.2.1
+WARNING: You are using pip version 20.1.1; however, version 20.2.4 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+Removing intermediate container d2af3bceb357
+ ---> a30c72cad0ab
+Step 5/6 : EXPOSE 8001
+ ---> Running in ae4d5ace0074
+Removing intermediate container ae4d5ace0074
+ ---> de5375458e59
+Step 6/6 : CMD ["python3", "api.py"]
+ ---> Running in 7dfe27efe4a9
+Removing intermediate container 7dfe27efe4a9
+ ---> eaee3839e782
+Successfully built eaee3839e782
+Successfully tagged ames-housing:1.0
+root@aiml-training-msalcedo:~/ames-housing# docker run -p 8080:8001 ames-housing:1.0
+ * Serving Flask app "api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8001/ (Press CTRL+C to quit)
+10.139.43.240 - - [30/Nov/2020 01:00:36] "GET / HTTP/1.1" 200 -
+10.139.43.240 - - [30/Nov/2020 01:01:07] "POST /predict HTTP/1.1" 200 -
+^Croot@aiml-training-msalcedo:~/ames-housing# ^C
+root@aiml-training-msalcedo:~/ames-housing# docker run -p 8080:8001 ames-housing:1.0
+ * Serving Flask app "api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8001/ (Press CTRL+C to quit)
+10.139.43.240 - - [30/Nov/2020 01:30:28] "GET / HTTP/1.1" 200 -
